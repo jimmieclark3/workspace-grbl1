@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ChiliPeppr - Hardware Fiddle</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.js"></script>
+	
+<script type="text/javascript">
+
+cprequire = function(deps, callback, errback) {
+	// nest two requires to solve asynchronous loading and ensure
+	// that indeed the chilipeppr global is available. this wasn'ts
+	// working with just one call to require, so had to nest.
+	//setTimeout(function() {
+		require(["chilipeppr_init"], function() {
+			//console.log("inside 1st layer cprequire");
+			//console.log(arguments);
+			//console.log(deps);
+			//console.log(callback);
+			setTimeout(function() {
+				require(deps, callback, errback);
+			}, 200);
+		});
+	//}, 100);
+}
+
+// This is the same as cprequire but with a twist. It is used
+// for testing out a specific define module and is aware of
+// whether the code is being run normally, or whether it was retrieved
+// from a chilipeppr.load() command. If it is from a chilipeppr.load()
+// command a quick removal of the code is done via a regexp so it's not
+// executed.
+cprequire_test = function(deps, callback, errback) {
+	cprequire.apply(this, arguments);
+}
+
+cpdefine = function() {
+	console.log("inside cpdefine");
+	console.log(arguments);
+	if (typeof(chilipeppr) != "undefined") {
+		console.log("chilipeppr", chilipeppr);
+		chilipeppr.defines[arguments[0]] = true;
+	}
+	//setTimeout(function() {
+		define.apply(this, arguments);
+	//}, 100);
+}
+
+requirejs.config({
+    baseUrl: '',
+    paths: {
+        // the left side is the module ID,
+        // the right side is the path to
+        // the jQuery file, relative to baseUrl.
+        // Also, the path should NOT include
+        // the '.js' file extension. This example
+        // is using jQuery 1.9.0 located at
+        // js/lib/jquery-1.9.0.js, relative to
+        // the HTML page.
+		chilipeppr_ready: 'https://i2dcui.appspot.com/js/main',
+		chilipeppr_init2: 'https://i2dcui.appspot.com/js/app2',
+		chilipeppr_init: 'https://i2dcui.appspot.com/js/app',
+		google: 'https://www.google-analytics.com/analytics',
+        jquery: 'https://code.jquery.com/jquery-2.1.0.min',
+		bootstrap: 'https://i2dcui.appspot.com/js/bootstrap/bootstrap_3_1_1.min',
+//		bootstrap: 'https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min',
+		amplify: 'https://i2dcui.appspot.com/js/amplify-1.1.2/amplify',
+		jquerycookie: 'https://i2dcui.appspot.com/js/jquery-cookie/jquery.cookie',
+		jqueryui: 'https://i2dcui.appspot.com/js/jquery-ui-1.10.4/ui/jquery.ui.core',
+        jqueryuiWidget: 'https://i2dcui.appspot.com/js/jquery-ui-1.10.4/ui/jquery.ui.widget',
+        jqueryuiMouse: 'https://i2dcui.appspot.com/js/jquery-ui-1.10.4/ui/jquery.ui.mouse',
+        jqueryuiResizeable: 'https://i2dcui.appspot.com/js/jquery-ui-1.10.4/ui/jquery.ui.resizable',
+		// original without ssl
+//		chilipeppr_ready: 'http://www.chilipeppr.com/js/main',
+//		chilipeppr_init2: 'http://www.chilipeppr.com/js/app2',
+//		chilipeppr_init: 'http://www.chilipeppr.com/js/app',
+//		google: 'http://www.google-analytics.com/analytics',
+//      jquery: 'http://code.jquery.com/jquery-2.1.0.min',
+//		bootstrap: 'http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min',
+//		amplify: 'http://www.chilipeppr.com/js/amplify-1.1.2/amplify',
+//		jquerycookie: 'http://www.chilipeppr.com/js/jquery-cookie/jquery.cookie',
+//		jqueryui: 'http://chilipeppr.com/js/jquery-ui-1.10.4/ui/jquery.ui.core',
+//      jqueryuiWidget: 'http://chilipeppr.com/js/jquery-ui-1.10.4/ui/jquery.ui.widget',
+//      jqueryuiMouse: 'http://chilipeppr.com/js/jquery-ui-1.10.4/ui/jquery.ui.mouse',
+//      jqueryuiResizeable: 'http://chilipeppr.com/js/jquery-ui-1.10.4/ui/jquery.ui.resizable',
+
+    },
+	shim: {
+		"chilipeppr_ready": ["jquery", "bootstrap", "amplify", "chilipeppr_init2"],
+		"chilipeppr_init2": ["jquery", "bootstrap", "amplify", "chilipeppr_init"],
+		"chilipeppr_init": ["jquery", "bootstrap", "amplify"],
+		"bootstrap": ["jquery"],
+		"amplify": ["jquery"],
+		"jqueryuiWidget": ['jqueryui'],
+        "jqueryuiMouse": ['jqueryuiWidget'],
+        "jqueryuiResizeable": ['jqueryuiMouse' ]
+	}
+});
+
+
+
+cprequire(["chilipeppr_ready"], function() {
+	console.log("seeing if chilipeppr is globally defined...");
+	console.log(chilipeppr);
+	
+	chilipeppr.load("root", "https://raw.githubusercontent.com/chilipeppr/element-rootpanel/master/auto-generated-widget.html");
+	
+});
+
+</script>
+</head>
+<body>
+
+<div id="root"></div>
+
+</body>
+</html>
