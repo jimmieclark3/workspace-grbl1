@@ -284,7 +284,7 @@ cpdefine("inline:com-chilipeppr-workspace-grbl", ["chilipeppr_ready"], function(
             console.log('WORKSPACE: loading autolevel');
             chilipeppr.load(
                 "#com-chilipeppr-ws-autolevel",
-                "http://raw.githubusercontent.com/jpadie/widget-grbl-autolevel/master/auto-generated-widget.html",
+                "http://raw.githubusercontent.com/jimmieclark3/widget-grbl-autolevel/master/auto-generated-widget.html",
                 function() {
                     require(["inline:com-chilipeppr-widget-autolevel"],
 
@@ -1025,7 +1025,7 @@ cpdefine("inline:com-chilipeppr-workspace-grbl", ["chilipeppr_ready"], function(
             // http://jsfiddle.net/chilipeppr/a4g5ds5n/
             console.log('WORKSPACE: loading gcode list');
             chilipeppr.load("#com-chilipeppr-gcode-list",
-                "http://raw.githubusercontent.com/jpadie/widget-gcodelist-jpaFork/master/auto-generated-widget.html",
+                "http://raw.githubusercontent.com/jimmieclark3/widget-gcodelist-jpaFork/master/auto-generated-widget.html",
                 //"http://fiddle.jshell.net/chilipeppr/a4g5ds5n/show/light/",
                 //"http://jsfiddle.net/jarret/0a53jy0x/show/light",
 
@@ -1397,10 +1397,10 @@ cpdefine("inline:com-chilipeppr-workspace-grbl", ["chilipeppr_ready"], function(
             }
             var grblWidgetUrl = '';
             if (queryDictionary['jDebug'] != 'undefined' && queryDictionary['jDebug'] == 1) {
-                grblWidgetUrl = "http://raw.githubusercontent.com/jpadie/grbl1-test-widget/master/auto-generated-widget.html"
+                grblWidgetUrl = "http://raw.githubusercontent.com/jimmieclark3/grbl1-test-widget/master/auto-generated-widget.html"
             }
             else {
-                grblWidgetUrl = "https://raw.githubusercontent.com/jpadie/grbl1-test-widget/62452538a02a3b9ac34c0ed842781f98760fef97/auto-generated-widget.html";
+                grblWidgetUrl = "https://raw.githubusercontent.com/jimmieclark3/grbl1-test-widget/62452538a02a3b9ac34c0ed842781f98760fef97/auto-generated-widget.html";
             }
             chilipeppr.load(
                 "#com-chilipeppr-widget-grbl-instance",
